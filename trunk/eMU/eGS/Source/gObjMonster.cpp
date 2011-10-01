@@ -3201,7 +3201,7 @@ void gObjMonsterDieGiveItem(LPOBJ lpObj, LPOBJ lpTargetObj)
 			{
 				if (IDR_DropMap[i] == lpObj->MapNumber || IDR_DropMap[i]==-1)
 				{
-					if (Random(0,99999 * TotalOnline) < IDR_DropRate[i])
+					if (Random(0,99999) < IDR_DropRate[i])
 					{
 						int MaxHitUser = gObjMonsterTopHitDamageUser(lpObj);
 						x = lpObj->X;
@@ -3216,7 +3216,7 @@ void gObjMonsterDieGiveItem(LPOBJ lpObj, LPOBJ lpTargetObj)
 		}
 	}
 
-	int rnd = Random(0,99999 * TotalOnline);	// Excellent Drop Percent #info
+	int rnd = Random(0,99999);	// Excellent Drop Percent #info
 	if (rnd < g_ExcItemDropRate)
 		ExtDropPer = true;
 	else
