@@ -1,0 +1,21 @@
+// CCastleEventItemList.cpp: implementation of the CCCastleEventItemList class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#include "..\Header\stdafx.h"
+#include "..\Header\CCastleEventItemList.h"
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+/*CCastleEventItemList::CCastleEventItemList()
+{
+
+}
+
+CCastleEventItemList::~CCastleEventItemList()
+{
+
+}
+*/
