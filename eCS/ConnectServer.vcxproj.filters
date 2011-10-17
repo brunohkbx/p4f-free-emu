@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{e1ecbcd5-4f09-4903-888c-d965200cee94}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Logproc">
+      <UniqueIdentifier>{f4463327-e0f2-4721-8eb5-53f29f8885bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Header Files">
+      <UniqueIdentifier>{a29568e3-43fe-47da-a8ef-a3f0325e0fa9}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Resource Files">
+      <UniqueIdentifier>{ca8a496d-13f6-416b-88c5-e47f23be0f9d}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{99cf71b4-f64d-4741-a759-e32d4fcaea69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{bb3db035-23a4-43be-81fa-38fbd85e4e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore">
+      <UniqueIdentifier>{3f1c2028-30e5-4a9d-a4ba-ae3cf0b39963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Console">
+      <UniqueIdentifier>{bb8b33fa-0666-498f-a7e0-cce3c99d5eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MD5">
+      <UniqueIdentifier>{9cd1b237-19e4-4114-ae9c-264f56ef3c56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MapServer">
+      <UniqueIdentifier>{2c650967-eea6-4c50-a5fa-bf69aa27fc75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SQL">
+      <UniqueIdentifier>{7f18fa88-760d-4b51-8a1f-76542e88085b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LogProc.cpp">
+      <Filter>Source Files\Logproc</Filter>
+    </ClCompile>
+    <ClCompile Include="winutil.cpp">
+      <Filter>Source Files\Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerList.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Protocol.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerCore.cpp">
+      <Filter>ServerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="MD5_KEYVAL.cpp">
+      <Filter>MD5</Filter>
+    </ClCompile>
+    <ClCompile Include="MapServer.cpp">
+      <Filter>MapServer</Filter>
+    </ClCompile>
+    <ClCompile Include="SQL.cpp">
+      <Filter>SQL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LogProc.h">
+      <Filter>Source Files\Logproc</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Source Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="winutil.h">
+      <Filter>Source Files\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Source Files\Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectServer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerList.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCore.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocol.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="Udp.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Console</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5.h">
+      <Filter>MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="MD5_KEYVAL.h">
+      <Filter>MD5</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolDef.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="CSProtocol.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="MapServer.h">
+      <Filter>MapServer</Filter>
+    </ClInclude>
+    <ClInclude Include="JoinSrv.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="SQL.h">
+      <Filter>SQL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ConnectServer.rc">
+      <Filter>Source Files\Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Protocol.0.97.h">
+      <Filter>Protocol</Filter>
+    </None>
+  </ItemGroup>
+</Project>
