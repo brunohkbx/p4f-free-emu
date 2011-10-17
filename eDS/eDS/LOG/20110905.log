@@ -1,0 +1,3 @@
+[11:05:34] SELECT Name FROM OptionData WHERE Name='Test3'
+[11:05:34] UPDATE OptionData SET GameOption=16, Qkey=176, Wkey=204, Ekey=0, ChatWindow=0 WHERE Name='Test3'
+[11:05:40] UPDATE Character SET cLevel=1,Class=16,LevelUpPoint=300, Experience=0, Strength=28, Dexterity=20, Vitality=25, Energy=10, Money=200000, Life=1100, MaxLife=1100, Mana=200, MaxMana=200, MapNumber=0, MapPosX=143, MapPosY=134, MapDir=0, PkCount=0, PkLevel=1, PkTime=0, DbVersion=3, Leadership=0, ChatLimitTime=0, FruitPoint=0 WHERE Name = 'Test3'

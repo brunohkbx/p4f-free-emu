@@ -1,0 +1,103 @@
+﻿Build started 23.09.2011 14:29:49.
+     1>Project "C:\Users\Алекс\Desktop\New C++\New Project\eDS\eDS\eDS.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\eDS.lastbuildstate".
+       InitializeBuildStatus:
+         Touching "Debug\eDS.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt eDS.cpp LogProc.cpp MySQL.cpp Query.cpp ServerCore.cpp winutil.cpp
+         winutil.cpp
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\winutil.cpp(405): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\winutil.cpp(460): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\winutil.cpp(474): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\winutil.cpp(493): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\winutil.cpp(503): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+         ServerCore.cpp
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(59): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(71): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(87): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(101): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(127): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'vsprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(1323): warning C4244: '=' : conversion from 'DWORD' to 'WORD', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(1578): warning C4244: '=' : conversion from 'DWORD' to 'BYTE', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(1895): warning C4244: '=' : conversion from 'DWORD' to 'BYTE', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(1896): warning C4244: '=' : conversion from 'DWORD' to 'short', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(2158): warning C4244: '=' : conversion from 'DWORD' to 'BYTE', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(2684): warning C4244: '=' : conversion from 'short' to 'BYTE', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(2853): warning C4244: '=' : conversion from 'DWORD' to 'unsigned char', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(3327): warning C4244: '=' : conversion from 'DWORD' to 'BYTE', possible loss of data
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(3336): warning C4244: '=' : conversion from 'DWORD' to 'BYTE', possible loss of data
+         Query.cpp
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(59): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(71): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(87): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(101): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(127): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'vsprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\query.cpp(166): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(188) : see declaration of 'strncpy'
+         MySQL.cpp
+         LogProc.cpp
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(59): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(71): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(87): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(101): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(127): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'vsprintf'
+         eDS.cpp
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(59): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(71): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(87): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(101): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\logproc.h(127): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'vsprintf'
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\console.h(100): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(62): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(164): warning C4800: 'UINT' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(184): warning C4800: 'UINT' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(185): warning C4800: 'UINT' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(186): warning C4800: 'UINT' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(187): warning C4800: 'UINT' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\eds.cpp(189): warning C4800: 'UINT' : forcing value to bool 'true' or 'false' (performance warning)
+         Generating Code...
+     1>c:\users\алекс\desktop\new c++\new project\eds\eds\dataserver.h(2173): warning C4700: uninitialized local variable 'pRecvPetInfoCount' used
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Алекс\Desktop\New C++\New Project\eDS\Debug\eDS.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\eDS.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Алекс\Desktop\New C++\New Project\eDS\Debug\eDS.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Алекс\Desktop\New C++\New Project\eDS\Debug\eDS.lib" /MACHINE:X86 Debug\eDS.obj
+         Debug\LogProc.obj
+         Debug\MySQL.obj
+         Debug\Query.obj
+         Debug\ServerCore.obj
+         Debug\winutil.obj
+         eDS.vcxproj -> C:\Users\Алекс\Desktop\New C++\New Project\eDS\Debug\eDS.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Алекс\Desktop\New C++\New Project\eDS\Debug\eDS.exe;#1" /manifest Debug\eDS.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\eDS.unsuccessfulbuild".
+         Touching "Debug\eDS.lastbuildstate".
+     1>Done Building Project "C:\Users\Алекс\Desktop\New C++\New Project\eDS\eDS\eDS.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:18.69

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="MySQL">
+      <UniqueIdentifier>{01d8aa61-38c4-48ef-9304-550fb058219c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MSSQL">
+      <UniqueIdentifier>{e9718183-9600-47b5-8114-ced3e8e40983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b9a96804-fbdd-445f-be13-cfd632c9d4c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{708bb553-9e4f-4bee-9156-29b7bd47bad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore">
+      <UniqueIdentifier>{642d50c1-39fa-432f-aedc-3df123a8d948}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Console">
+      <UniqueIdentifier>{7f0f4267-3fa7-4cf7-8708-cc04c2e0064b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{3fbc4bd7-c3c1-421d-a144-807227050468}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MySQL.h">
+      <Filter>MySQL</Filter>
+    </ClInclude>
+    <ClInclude Include="Query.h">
+      <Filter>MSSQL</Filter>
+    </ClInclude>
+    <ClInclude Include="winutil.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="logproc.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Console</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCore.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="eDS.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataServer.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="ExDBServer.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="EventServer.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>ServerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="RankingProt.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="EventProt.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ExDBProt.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProt.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="DataProt.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MySQL.cpp">
+      <Filter>MySQL</Filter>
+    </ClCompile>
+    <ClCompile Include="Query.cpp">
+      <Filter>MSSQL</Filter>
+    </ClCompile>
+    <ClCompile Include="winutil.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="LogProc.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="eDS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerCore.cpp">
+      <Filter>ServerCore</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
