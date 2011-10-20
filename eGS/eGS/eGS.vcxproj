@@ -70,8 +70,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CSAuth2.h" />
-    <ClInclude Include="GGSrv.h" />
     <ClInclude Include="Header\AcceptIp.h" />
     <ClInclude Include="Header\asmlib.h" />
     <ClInclude Include="Header\AttackEvent.h" />
@@ -201,7 +199,6 @@
     <ClInclude Include="Header\StatMng.h" />
     <ClInclude Include="Header\StdAfx.h" />
     <ClInclude Include="Header\TDurMagicKeyChecker.h" />
-    <ClInclude Include="Header\THID.h" />
     <ClInclude Include="Header\TMonsterAI.h" />
     <ClInclude Include="Header\TMonsterAIAgro.h" />
     <ClInclude Include="Header\TMonsterAIAutomata.h" />
@@ -252,8 +249,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.h" />
-    <ClCompile Include="CSAuth2.cpp" />
-    <ClCompile Include="GGSrv.cpp" />
     <ClCompile Include="sfmt.cpp" />
     <ClCompile Include="SimpleModules.cpp" />
     <ClCompile Include="Source\AcceptIp.cpp" />
@@ -374,7 +369,6 @@
     <ClCompile Include="Source\StatMng.cpp" />
     <ClCompile Include="Source\StdAfx.cpp" />
     <ClCompile Include="Source\TDurMagicKeyChecker.cpp" />
-    <ClCompile Include="Source\THID.cpp" />
     <ClCompile Include="Source\TMonsterAI.cpp" />
     <ClCompile Include="Source\TMonsterAIAgro.cpp" />
     <ClCompile Include="Source\TMonsterAIAutomata.cpp" />

@@ -33,12 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CSAuth2.h">
-      <Filter>CSAuth</Filter>
-    </ClInclude>
-    <ClInclude Include="GGSrv.h">
-      <Filter>GGSrv</Filter>
-    </ClInclude>
     <ClInclude Include="randomc.h">
       <Filter>Random</Filter>
     </ClInclude>
@@ -432,9 +426,6 @@
     <ClInclude Include="Header\TDurMagicKeyChecker.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Header\THID.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Header\TMonsterAI.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -570,12 +561,6 @@
     <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CSAuth2.cpp">
-      <Filter>CSAuth</Filter>
-    </ClCompile>
-    <ClCompile Include="GGSrv.cpp">
-      <Filter>GGSrv</Filter>
-    </ClCompile>
     <ClCompile Include="sfmt.cpp">
       <Filter>Random</Filter>
     </ClCompile>
@@ -940,9 +925,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\TDurMagicKeyChecker.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\THID.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\TMonsterAI.cpp">

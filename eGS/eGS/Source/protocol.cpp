@@ -633,12 +633,7 @@ void ProtocolCore(BYTE protoNum, unsigned char * aRecv, int aLen, int aIndex, BO
 					GCPacketCheckSumRecv((PMSG_PACKETCHECKSUM *)aRecv, aIndex);
 				}
 				break;
-			case 0x73:
-				if ( DataEncryptCheck(aIndex, protoNum, Encrypt) != FALSE )
-				{
-					GCNPggCheckSumRecv((PMSG_NPROTECTGGCHECKSUM *)aRecv, aIndex);
-				}
-				break;
+
 			case 0x81:
 				CGWarehouseMoneyInOut(aIndex, (PMSG_WAREHOUSEMONEYINOUT *)aRecv);
 				break;
@@ -14336,60 +14331,6 @@ void GCPacketCheckSumRecv(PMSG_PACKETCHECKSUM * aRecv, int aIndex)
 {
 	gPacketCheckSum.AddCheckSum(aIndex, aRecv->funcindex, aRecv->CheckSum);
 }
-
-
-
-
-void GCNPggSendCheckSum(int aIndex, _GG_AUTH_DATA * pggAuthData)
-{
-	PMSG_NPROTECTGGCHECKSUM pMsg;
-
-	PHeadSetBE((LPBYTE)&pMsg, 0x73, sizeof(pMsg));
-	memcpy(&pMsg.m_ggadCheckSum, pggAuthData, sizeof(pMsg.m_ggadCheckSum));
-
-	DataSend(aIndex, (LPBYTE)&pMsg, sizeof(pMsg));
-}
-
-
-
-
-void GCNPggCheckSumRecv(PMSG_NPROTECTGGCHECKSUM * lpMsg, int aIndex)
-{
-	LPOBJ lpObj = &gObj[aIndex];
-
-	if ( !gObjIsConnected(aIndex))
-		return;
-
-	LogAdd("[NPgg] Recv Checksum = %x,AuthValue = %x [%s][%s]",
-		lpMsg->m_ggadCheckSum.dwIndex, lpObj->NPggCSAuth.m_AuthAnswer.dwIndex,
-		lpObj->AccountID, lpObj->Name);
-
-	memcpy(&gObj[aIndex].NPggCSAuth.m_AuthAnswer, &lpMsg->m_ggadCheckSum, sizeof(lpObj->NPggCSAuth.m_AuthAnswer));
-
-	DWORD dwGGErrCode = gObj[aIndex].NPggCSAuth.CheckAuthAnswer();
-
-	if ( dwGGErrCode )
-	{
-		LogAdd("[NPgg] Invalid Checksum Detect Checksum = %x,AuthValue = %x [%s][%s]",
-			lpMsg->m_ggadCheckSum.dwIndex, lpObj->NPggCSAuth.m_AuthAnswer.dwIndex,
-			lpObj->AccountID, lpObj->Name);
-
-		GCServerMsgStringSend("Restart the game and if the same error persists", aIndex, 0);
-		GCServerMsgStringSend("attach url files in GameGuard folder with your contact details", aIndex, 0);
-		GCServerMsgStringSend("and send it to game@play4free.ru", aIndex, 0);
-
-		CloseClient(aIndex);
-
-		return;
-	}
-
-	lpObj->m_NPggCheckSumSendTime = GetTickCount();
-	lpObj->m_bSentGGAuth = false;
-
-	LogAdd("[NPgg] Checksum Clear %x [%s][%s]",
-		lpMsg->m_ggadCheckSum.dwIndex, lpObj->AccountID, lpObj->Name);
-}
-
 
 
 struct PMSG_REQ_DUEL_OK

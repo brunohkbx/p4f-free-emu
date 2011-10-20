@@ -51,10 +51,10 @@
 #endif
 
 
-extern char ExDbIp[256];
-extern char DataServerIp2[256];
-extern char DataServerIp[256];
-extern char JoinServerIp[256];
+extern char ExDbIp[30];
+extern char DataServerIp2[30];
+extern char DataServerIp[30];
+extern char JoinServerIp[30];
 extern int gServerReady;
 extern int gCloseMsg;
 extern int gCloseMsgTime;

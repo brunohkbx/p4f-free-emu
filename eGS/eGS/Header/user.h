@@ -12,7 +12,6 @@
 #include "SkillDelay.h"
 #include "ComboAttack.h"
 #include "giocp.h"
-#include "..\GGSrv.h"
 #include "MagicInf.h"
 #include "zzzitem.h"
 #include "classdef.h"
@@ -884,9 +883,6 @@ struct OBJECTSTRUCT
 	BOOL m_bIsInMonsterHerd;	// F44
 	BOOL m_bIsMonsterAttackFirst;	// F48
 	class MonsterHerd * m_lpMonsterHerd;	// F4C
-	CCSAuth2 NPggCSAuth;	// F50
-	bool m_bSentGGAuth;	// F7C
-	DWORD m_NPggCheckSumSendTime;	// F80
 	int fSkillFrustrumX[MAX_ARRAY_FRUSTRUM];	// F84
 	int fSkillFrustrumY[MAX_ARRAY_FRUSTRUM];	// F94
 	BYTE SkillHellFire2State;	// FA4
@@ -1367,7 +1363,6 @@ int gObjDuelCheck(LPOBJ lpObj);//перевірка чи 2 гравця находяться в дуелі
 void gObjResetDuel(LPOBJ lpObj);//занулення параметрів для дуелі
 void gObjSendDuelEnd(LPOBJ lpObj);//відправлення пакету на закриття дуелі
 void gObjCheckAllUserDuelStop();//перевірка на закриття дуелі якщо вона не відбувається на протязі 1хв
-void gObjNProtectGGCheckSum(int aIndex);
 void SkillFrustrum(unsigned char bangle, int aIndex);
 int SkillTestFrustrum(int x, int y, int aIndex);
 int gObjCheckMaxZen(int aIndex, int nAddZen);

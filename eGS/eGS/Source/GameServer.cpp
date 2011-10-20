@@ -30,7 +30,6 @@
 #include "..\Header\CastleSiege.h"
 #include "..\Header\CastleDeepEvent.h"
 #include "..\Header\Crywolf.h"
-#include "..\Header\THID.h"
 
 #include "..\SQL.h"
 #include "..\Header\IllusionTemple.h"
@@ -38,10 +37,10 @@
 
 
 
-char ExDbIp[256];
-char DataServerIp2[256];
-char DataServerIp[256];
-char JoinServerIp[256];
+char ExDbIp[30];
+char DataServerIp2[30];
+char DataServerIp[30];
+char JoinServerIp[30];
 int gServerReady;
 int gCloseMsg;
 int gCloseMsgTime;
@@ -59,84 +58,6 @@ void UpdateLog();
 
 
 
-#if (GS_PROTECTED==1)
-DWORD GetFunctionRVA(void* FuncName)
-{
-      void *_tempFuncName=FuncName;
-      char *ptempFuncName=PCHAR(_tempFuncName);
-      DWORD _jmpdwRVA,dwRVA;
-      CopyMemory(&_jmpdwRVA,ptempFuncName+1,4);
-      dwRVA=DWORD(ptempFuncName)+_jmpdwRVA+5;
-      return(dwRVA);
-}
-
-DWORD GetFunctionSize(void* FuncName)
-{
-      /*DWORD dwRVA=GetFunctionRVA(FuncName);
-      char* pFuncBody=PCHAR(dwRVA);
-      UCHAR _temp;
-      bool notEnd=TRUE;
-      char *DepackerCodeEnd=new TCHAR[10];
-      DWORD l=0;
-      do
-      {
-            CopyMemory(&_temp,pFuncBody+l,1);
-            if(_temp==0xC3)
-            {
-                  CopyMemory(DepackerCodeEnd,pFuncBody+l+0x01,10);
-                  DepackerCodeEnd[9]=0x00;
-                  if(strcmp(DepackerCodeEnd,"ETGXZKATZ")==0)
-                  {
-                        notEnd=FALSE;
-                  }
-            }
-            l++;
-      }while(notEnd);
-      return(l);*/
-	DWORD dwConstant = 0x3456933F;
-	DWORD dwOtherConstant = 0x5C39FD51;
-	dwConstant--;
-	dwOtherConstant--;
-	dwConstant = dwConstant + dwOtherConstant + 2;
-
-	DWORD dwSize = 0;
-	DWORD dwRVA = (DWORD)FuncName;
-
-	while ( *(DWORD *)(dwRVA+dwSize) != dwConstant )
-	{
-		dwSize++;
-	}
-
-	return dwSize;
-}
-
-
-#define KEY_LEN	20
-static unsigned char Key[KEY_LEN] = { 0xAF, 0x23, 0x4F, 0x7D,0x98, 0x0D,0x3D, 0xCC,0xE1, 0xB6,
-								 0x15, 0xDE, 0x8A, 0x67,0x1E, 0x4C,0x24, 0xFA,0x32, 0xF4 };
-
-BOOL UnProtectProtocolCore()
-{
-	DWORD dwOldProtect;
-	DWORD dwSize = GetFunctionSize(ProtocolCore);
-	
-	if ( VirtualProtect(ProtocolCore, dwSize, PAGE_EXECUTE_READWRITE, &dwOldProtect) == FALSE )
-	{
-		return FALSE;
-	}
-
-	LPBYTE Temp = (LPBYTE)(ProtocolCore);
-
-	for ( DWORD dwCount = 0 ; dwCount < dwSize ; dwCount++)
-	{
-		Temp[ dwCount ] ^= Key [ dwCount % KEY_LEN ];
-	}
-
-	return TRUE;
-}
-#endif
-
-
 //------------------------------------------------------------
 
 
@@ -144,15 +65,6 @@ int main(int argc, char* argv[])
 {
 	SetExceptionHook();
 	gCloseAllThread = false;
-#if (PROT==1)
-	THID HWID;
-	wstring hwid=HWID.GetHDDSerial();
-	hwid=MD5(hwid);
-	hwid=code(hwid,L"Killbrum");
-	if (hwid!=L"®µ¿X¨;/l/È¼²é¿ŴóœŨşŵļėĘŲÓ")
-		return 0;
-	cout<<"HDD Serial with MD5 and XOR: "<<hwid_xor.t_str()<<endl;
-#endif
 	
 	GiocpInit();
 	GameMainInit();
@@ -170,41 +82,38 @@ int main(int argc, char* argv[])
 	
 
 	// Port Configuration from Cmd Line
-	if (argc > 8) 
-	{
-		cout<<"Error, more then 8 cmd parameters.";
-		return 0;
-		//sscanf_s(lpCmdLine, "%s %d %s %d %d %s %d %s %d" ,JoinServerIp, sizeof(JoinServerIp), &JoinServerPort, DataServerIp, sizeof(DataServerIp), &DataServerPort, &serverport, DataServerIp2, sizeof(DataServerIp2), &DataServerPort2, ExDbIp, sizeof(ExDbIp), &ExDbPort);
-	}
-	else if (argc > 1)
+	if (argc > 0 && argc < 8)
 	{ 
-		strcpy(JoinServerIp,argv[1]);
+		strcpy_s(JoinServerIp,sizeof(JoinServerIp),argv[1]);
 		JoinServerPort = atoi(argv[2]);
 
-		strcpy(DataServerIp,argv[3]);
+		strcpy_s(DataServerIp,sizeof(DataServerIp),argv[3]);
 		DataServerPort = atoi(argv[4]);
 
 		GameServerPort = atoi(argv[5]);
 
- 		strcpy(ExDbIp,argv[6]);
+ 		strcpy_s(ExDbIp,sizeof(ExDbIp),argv[6]);
 		ExDbPort = atoi(argv[7]);
 	}
 	else
 	{
-		strcpy(JoinServerIp,"127.0.0.1");
-		strcpy(DataServerIp,"127.0.0.1");
-		strcpy(DataServerIp2,"127.0.0.1");
-		strcpy(ExDbIp,"127.0.0.1");
+		if (argc > 8)
+			cout<<"Error, more then 8 cmd parameters. All set to default.";
+		else
+			cout<<"Can`t read incoming params. All set to default.";
 
-		GameServerPort=55901;
-		JoinServerPort=55970;
-		DataServerPort=55960;
-		DataServerPort2=55962;
-		ExDbPort=55906;
-		MsgBox( "Please input authentication server address and port number." );
+		strcpy_s(JoinServerIp,sizeof(JoinServerIp),"127.0.0.1");
+		strcpy_s(DataServerIp,sizeof(DataServerIp),"127.0.0.1");
+		strcpy_s(DataServerIp2,sizeof(DataServerIp2),"127.0.0.1");
+		strcpy_s(ExDbIp,sizeof(ExDbIp),"127.0.0.1");
 
-		cout<<"Can`t read incoming params. All set to default.";
+		GameServerPort = 55901;
+		JoinServerPort = 55970;
+		DataServerPort = 55960;
+		DataServerPort2 = 55962;
+		ExDbPort = 55906;
 	}
+
 	GameServerStart();
 	boost::thread th(boost::bind(AllServerStart));
 
