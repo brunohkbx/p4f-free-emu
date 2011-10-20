@@ -864,13 +864,6 @@ struct _GG_AUTH_DATA
 */
 
 
-struct PMSG_NPROTECTGGCHECKSUM
-{
-	PBMSG_HEAD h;	// C3:73
-	_GG_AUTH_DATA m_ggadCheckSum;	// 4
-};
-
-
 
 struct PMSG_REQ_START_DUEL
 {
@@ -1952,8 +1945,6 @@ void CGRequestEventEnterCount(PMSG_REQ_CL_ENTERCOUNT* lpMsg, int aIndex);
 void CGRequestLottoRegister(PMSG_REQ_2ANV_LOTTO_EVENT* lpMsg, int aIndex);
 void CGReqMoveOtherServer(PMSG_REQ_MOVE_OTHERSERVER* lpMsg, int aIndex);
 void GCPacketCheckSumRecv(PMSG_PACKETCHECKSUM* aRecv, int aIndex);
-void GCNPggSendCheckSum(int aIndex,_GG_AUTH_DATA* pggAuthData);
-void GCNPggCheckSumRecv(PMSG_NPROTECTGGCHECKSUM* lpMsg, int aIndex);
 void CGDuelStartRequestRecv(PMSG_REQ_START_DUEL* lpMsg, int aIndex);
 void CGDuelEndRequestRecv(PMSG_REQ_END_DUEL* lpMsg, int aIndex);
 void CGDuelOkRequestRecv(PMSG_ANS_DUEL_OK* lpMsg, int aIndex);

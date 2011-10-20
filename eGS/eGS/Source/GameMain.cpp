@@ -27,7 +27,6 @@
 #include "..\Header\SendHackLog.h"
 #include "..\SimpleModules.h"
 #include "..\Header\MapServerManager.h"
-#include "..\GGSrv.h"
 #include "..\Header\QuestInfo.h"
 #include "..\Header\SkillHitBox.h"
 #include "..\Header\EventManagement.h"
@@ -1939,7 +1938,6 @@ void GameMainFree()
 	gObjEnd();
 	ClearBattleSoccer();
 	LogClose();
-	CleanupGameguardAuth();
 	EventItemBugsFree();
 
 	WaitForSingleObject(News_System_Thread , INFINITE);
@@ -2209,16 +2207,6 @@ void ReadCommonServerInfo()
 #endif
 
 
-
-#if (CSAUTH_VERSION==2)
-	DWORD dwGGErrCode = InitGameguardAuth("", OBJMAXUSER);
-
-	if ( dwGGErrCode != 0 )
-	{
-		MsgBox("Failed initialization of GameGaurd !!! , Error: %d", dwGGErrCode);
-		return;
-	}
-#endif
 	SetMapName();
 
 #if (FOREIGN_GAMESERVER==1)

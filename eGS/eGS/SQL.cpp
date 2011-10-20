@@ -37,10 +37,6 @@ CQuery::~CQuery()
 }
 
 
-
-
-
-
 bool CQuery::Connect(int iDBType, SQLCHAR * lpszDNS, SQLCHAR * lpszID, SQLCHAR * lpszPass)
 {
 	int iRecCount = 1;
@@ -98,9 +94,6 @@ bool CQuery::ReConnect()
 {
 	return this->Connect(this->m_iDBType, this->m_DNS, this->m_ID, this->m_Pass);
 }
-
-
-
 
 
 bool CQuery::Execute(LPSTR lpszStatement)

@@ -1643,9 +1643,6 @@ void gObjCharZeroSet(int aIndex)
 	memset(lpObj->m_Quest, (BYTE)-1, sizeof(lpObj->m_Quest));
 	lpObj->m_SendQuestInfo = 0;
 	gPacketCheckSum.ClearCheckSum(lpObj->m_Index);
-	lpObj->NPggCSAuth.Init();
-	lpObj->m_bSentGGAuth = false;
-	lpObj->m_NPggCheckSumSendTime = 0;
 	lpObj->PlusStatQuestClear = false;
 	lpObj->ComboSkillquestClear = false;
 	lpObj->m_LastTeleportTime = 0;
@@ -15792,7 +15789,6 @@ void gObjSecondProc()
 			gObjPkDownTimeCheck(lpObj,1);
 			gObjInterfaceTimeCheck(lpObj);
 			gObjTimeCheckSelfDefense(lpObj);
-			gObjNProtectGGCheckSum(n);
 		}
 
 		if(lpObj->Connected == PLAYER_CONNECTED ||
@@ -21250,74 +21246,6 @@ void gObjCheckAllUserDuelStop()//перевірка на закриття дуелі якщо вона не відбув
 
 
 //------------------------------------------------------------
-
-
-void gObjNProtectGGCheckSum(int aIndex)
-{
-	if(gUseNPGGChecksum == 0)
-	{
-		return;
-	}
-
-	LPOBJ lpObj = &gObj[aIndex];
-
-	if(lpObj->m_InWebzen)
-	{
-		return;
-	}
-
-	if(lpObj->m_bSentGGAuth == 0)
-	{
-		if((GetTickCount() - lpObj->m_NPggCheckSumSendTime) > 300000)
-		{
-			lpObj->m_NPggCheckSumSendTime = GetTickCount();
-
-			unsigned long dwGGErrCode = lpObj->NPggCSAuth.GetAuthQuery();
-
-			if(dwGGErrCode != 0)
-			{
-				LogAdd("[NPgg] Failed Send Checksum %X [%s][%s] errorcode: %d",dwGGErrCode,lpObj->AccountID,lpObj->Name,dwGGErrCode);
-				lpObj->m_bSentGGAuth = 0;
-				gObjCloseSet(aIndex,0);
-			}
-			else
-			{
-				LogAdd("[NPgg] Send Checksum %X [%s][%s]",dwGGErrCode,lpObj->AccountID,lpObj->Name);
-				GCNPggSendCheckSum(aIndex,&lpObj->NPggCSAuth.m_AuthQuery);
-				lpObj->m_bSentGGAuth = 1;
-			}
-		}
-	}
-	else
-	{
-		if((GetTickCount() - lpObj->m_NPggCheckSumSendTime) > 30000)
-		{
-			LogAdd("[NPgg] Checksum Time Out [%s][%s]",lpObj->AccountID,lpObj->Name);
-
-			PMSG_NOTICE pNotice;
-
-			TNotice::SetNoticeProperty(&pNotice,10,_ARGB(0xFF,0xFE,0x51,0x51),1,0,20);
-
-			TNotice::MakeNoticeMsg(&pNotice,10,"Restart the game and if the same error persists");
-			TNotice::SendNoticeToUser(aIndex,&pNotice);
-
-			TNotice::MakeNoticeMsg(&pNotice,10,"attach url files in GameGuard folder with your contact details");
-			TNotice::SendNoticeToUser(aIndex,&pNotice);
-
-			TNotice::MakeNoticeMsg(&pNotice,10,"and send it to game@play4free.ru");
-			TNotice::SendNoticeToUser(aIndex,&pNotice);
-
-			gObjCloseSet(aIndex,0);
-		}
-	}
-}
-
-
-
-
-//------------------------------------------------------------
-
-
 
 void SkillFrustrum(BYTE bangle, int aIndex)//#error NOT USED!
 {
