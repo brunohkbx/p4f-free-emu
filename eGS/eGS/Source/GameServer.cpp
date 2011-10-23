@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 	
 
 	// Port Configuration from Cmd Line
-	if (argc > 0 && argc < 8)
+	if (argc == 8)
 	{ 
 		strcpy_s(JoinServerIp,sizeof(JoinServerIp),argv[1]);
 		JoinServerPort = atoi(argv[2]);

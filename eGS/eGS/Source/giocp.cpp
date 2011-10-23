@@ -715,7 +715,6 @@ bool DataSendSocket(SOCKET& sock, unsigned char* lpMsg, DWORD dwSize)
 
 
 
-
 BOOL DataSend(int aIndex, unsigned char* lpMsg, DWORD dwSize)
 {
 	unsigned long SendBytes;

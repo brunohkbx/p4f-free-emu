@@ -2718,46 +2718,6 @@ void CSPJoinIdPassRequest(PMSG_IDPASS* lpMsg, int aIndex)
 
 
 
-
-
-
-
-
-	
-void CSPJoinIdPassRequestTEST(PMSG_IDPASS * lpMsg, int aIndex)//#error FATAL EERROR
-{
-	char szId[11];
-	char szPass[MAX_PASS_LEN+1];
-	LPOBJ lpObj = &gObj[aIndex];
-	SDHP_IDPASS spMsg;
-
-	PHeadSetB((LPBYTE)&spMsg, 0x11, sizeof(spMsg));
-	spMsg.Number = aIndex;
-	wsprintf(szId, "슛돌이%d", logincounttest);
-	wsprintf(szPass, "m321", Random(0,8));
-	LogAdd("login send : %s %s", szId, szPass);
-	
-	BuxConvert(szId, MAX_ACCOUNT_LEN);
-	BuxConvert(szPass, MAX_ACCOUNT_LEN);
-	memcpy(spMsg.Id, szId, MAX_ACCOUNT_LEN);
-	memcpy(spMsg.Pass, szPass, MAX_PASS_LEN);
-	logincounttest++;
-	
-	if ( (GetTickCount()-ltesttime) > 1000 )
-	{
-		ltesttime = GetTickCount();
-		logincounttest=0;
-	}
-
-	wsJServerCli.DataSend((char*)&spMsg, spMsg.h.size);
-	spMsg.h.headcode = 0x01;
-	wsJServerCli.DataSend((char*)&spMsg, spMsg.h.size);
-}
-
-
-
-
-
 struct SDHP_BILLSEARCH
 {
 	PBMSG_HEAD h;	// C1:06
@@ -2949,7 +2909,7 @@ void CGPCharacterCreate( PMSG_CHARCREATE * lpMsg, int aIndex)
 
 	if ( !gCreateCharacter )
 	{
-		GCServerMsgStringSend("서버분할 기간에는 캐릭터를 생성할수 없습니다", aIndex, 1); //#error
+		GCServerMsgStringSend("In this server you cant create characters.", aIndex, 1); 
 		JGCharacterCreateFailSend(aIndex, lpMsg->Name);
 
 		return;
@@ -2957,7 +2917,7 @@ void CGPCharacterCreate( PMSG_CHARCREATE * lpMsg, int aIndex)
 
 	if (strlen(lpMsg->Name) < 4)
 	{
-		GCServerMsgStringSend("Character name must have more then 4 symbols", aIndex, 1); //#error
+		GCServerMsgStringSend("Character name must have more then 4 symbols", aIndex, 1); 
 		JGCharacterCreateFailSend(aIndex, lpMsg->Name);
 
 		return;
@@ -4605,18 +4565,11 @@ BOOL CGItemDropRequest(PMSG_ITEMTHROW * lpMsg, int aIndex, BOOL drop_type)
 						gObjInventoryDeleteItem(aIndex, lpMsg->Ipos);
 						pResult.Result = true;
 
-						if ( Random(0,10000) < g_iHiddenTreasureBoxOfflineRate )
-						{
-							//EGReqRegHTOfflineGift(lpObj->m_Index); #error
-						}
-						else
-						{
-							int money = 1000000;
-							MapC[lpObj->MapNumber].MoneyItemDrop(money, lpObj->X, lpObj->Y);
+						int money = 1000000;
+						MapC[lpObj->MapNumber].MoneyItemDrop(money, lpObj->X, lpObj->Y);
 							
-							LogAdd("[Hidden TreasureBox Event] [%s][%s] Event ZenDrop : %d : (%d)(%d/%d)",
-								lpObj->AccountID, lpObj->Name, money, lpObj->MapNumber, lpObj->X, lpObj->Y);
-						}
+						LogAdd("[Hidden TreasureBox Event] [%s][%s] Event ZenDrop : %d : (%d)(%d/%d)",
+							lpObj->AccountID, lpObj->Name, money, lpObj->MapNumber, lpObj->X, lpObj->Y);
 						break;
 				}
 			}
@@ -9205,7 +9158,7 @@ void GCGuildWarRequestSendRecv(PMSG_GUILDWARSEND_RESULT * lpMsg, int aIndex)
 
 		pResult.h.c = 0xC1;
 		pResult.h.headcode = 0x60;
-		pResult.h.size = sizeof(pResult);	// #error Change fro pResult
+		pResult.h.size = sizeof(pResult);	
 		pResult.Result = 0;
 
 		DataSend(aIndex, (LPBYTE)&pResult, pResult.h.size);
@@ -12746,9 +12699,6 @@ void CGUseItemRecv(PMSG_USEITEM* lpMsg, int aIndex)
 		}
 		else
 		{
-			//LogAdd("error-L3 : %s return %s %d %d %s",
-			//	gObj[aIndex].Name, __FILE__,__LINE__, pos, CItem::GetName());	// #error Convert to other Name
-
 			GCReFillSend(aIndex, (WORD)gObj[aIndex].Life, 0xFD, 1, gObj[aIndex].iShield);
 		}
 	}
@@ -13439,8 +13389,6 @@ void GCRegEventChipRecv(PMSG_REGEVENTCHIP* lpMsg, int aIndex)
 				pMsg.iINDEX = aIndex;
 				pMsg.Pos = Pos;
 				strcpy_s(pMsg.szUID, sizeof(pMsg.szUID), lpObj->AccountID);
-
-				//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg)); #error
 			}
 			else
 			{
@@ -13466,8 +13414,6 @@ void GCRegEventChipRecv(PMSG_REGEVENTCHIP* lpMsg, int aIndex)
 				pMsg.iINDEX = aIndex;
 				pMsg.iPosition = Pos;
 				strcpy_s(pMsg.szUID, sizeof(pMsg.szUID), lpObj->AccountID);
-
-				//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg)); #error
 
 				LogAdd("[Stone] [%s][%s] Register Stone (Stone Pos:%d, Serial:%d)",
 					lpObj->AccountID, lpObj->Name, lpMsg->ChipPos, sitem->m_Number);
@@ -13502,51 +13448,6 @@ struct PMSG_REQ_REGISTER_MUTONUM
 };
 
 
-void GCGetMutoNumRecv(PMSG_GETMUTONUMBER* lpMsg, int aIndex)
-{
-	if ( gObj[aIndex].MutoNumber != 0 )
-	{
-		char msg[255];
-		wsprintf(msg, "이미 루가드의 숫자가 있습니다");
-		GCServerMsgStringSend(msg, aIndex, 1);
-		return;
-	}
-
-	if ( gObj[aIndex].UseEventServer != FALSE )
-		return;
-
-	gObj[aIndex].UseEventServer = TRUE;
-
-	if ( !gObjFind10EventChip(aIndex) )
-	{
-		PMSG_GETMUTONUMBER_RESULT Result;
-
-		PHeadSetB((LPBYTE)&Result, 0x96, sizeof(Result));
-		Result.MutoNum[0] = -1;
-		Result.MutoNum[1] = 0;
-		Result.MutoNum[2] = 0;
-
-		DataSend(aIndex, (LPBYTE)&Result, Result.h.size);
-		gObj[aIndex].UseEventServer = FALSE;
-
-		return;
-	}
-
-	PMSG_REQ_REGISTER_MUTONUM pMsg;
-
-	PHeadSetB((LPBYTE)&pMsg, 0x03, sizeof(pMsg));
-	pMsg.iINDEX = aIndex;
-	strcpy_s(pMsg.szUID, sizeof(pMsg.szUID), gObj[aIndex].AccountID);
-
-	//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg)); #error
-
-	LogAdd("[EventChip] [%s][%s] Request MutoNumber",
-		gObj[aIndex].AccountID, gObj[aIndex].Name);
-}
-
-
-
-
 void GCUseEndEventChipRescv(int aIndex)
 {
 	if ( !gObjIsConnectedGP(aIndex))
@@ -13570,32 +13471,6 @@ struct PMSG_REQ_RESET_EVENTCHIP
 	int iINDEX;	// 4
 	char szUID[11];	// 8
 };
-
-
-void GCUseRenaChangeZenRecv(PMSG_EXCHANGE_EVENTCHIP* lpMsg, int aIndex)
-{
-	if ( gObj[aIndex].UseEventServer )
-		return;
-
-	gObj[aIndex].UseEventServer = TRUE;
-
-	PMSG_REQ_RESET_EVENTCHIP pMsg;
-
-	if ( lpMsg->btType == 1 )	// Stone?
-		PHeadSetB((LPBYTE)&pMsg, 0x09, sizeof(pMsg));
-	else
-		PHeadSetB((LPBYTE)&pMsg, 0x04, sizeof(pMsg));
-
-	pMsg.iINDEX = aIndex;
-	strcpy_s(pMsg.szUID, sizeof(pMsg.szUID), gObj[aIndex].AccountID);
-
-	//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg)); #error
-
-	if ( lpMsg->btType == 0x01 )
-		LogAdd("[EventChip] [%s][%s] Request Change Stones", gObj[aIndex].AccountID, gObj[aIndex].Name);
-	else
-		LogAdd("[EventChip] [%s][%s] Request Change Rena", gObj[aIndex].AccountID, gObj[aIndex].Name);
-}
 
 
 struct PMSG_SEND_QEUSTINFO
@@ -14251,34 +14126,6 @@ struct PMSG_REQ_2ANIV_SERIAL
 	char SERIAL3[5];	// 1D
 	int iMEMB_GUID;	// 24
 };
-
-
-void CGRequestLottoRegister(PMSG_REQ_2ANV_LOTTO_EVENT* lpMsg, int aIndex)
-{
-	PMSG_REQ_2ANIV_SERIAL pMsg;
-
-	PHeadSetB((LPBYTE)&pMsg, 0x08, sizeof(pMsg));
-
-	if ( gObj[aIndex].UseEventServer )
-		return;
-
-	gObj[aIndex].UseEventServer = TRUE;
-	pMsg.iINDEX = aIndex;
-	pMsg.iMEMB_GUID = gObj[aIndex].DBNumber;
-	memcpy(pMsg.szUID, gObj[aIndex].AccountID, MAX_ACCOUNT_LEN);
-	pMsg.szUID[MAX_ACCOUNT_LEN] = 0;
-	memcpy(pMsg.SERIAL1, lpMsg->SERIAL1, 4);
-	pMsg.SERIAL1[4] = 0;
-	memcpy(pMsg.SERIAL2, lpMsg->SERIAL2, 4);
-	pMsg.SERIAL2[4] = 0;
-	memcpy(pMsg.SERIAL3, lpMsg->SERIAL3, 4);
-	pMsg.SERIAL3[4] = 0;
-
-	//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg)); #error
-
-	LogAdd("[Mu_2Anv_Event] [%s][%s] Register Lotto Number (Serial: %s-%s-%s)",
-		gObj[aIndex].AccountID, gObj[aIndex].Name, pMsg.SERIAL1, pMsg.SERIAL2, pMsg.SERIAL3);
-}
 
 
 struct SDHP_CHARACTER_TRANSFER

@@ -3,7 +3,6 @@
 #include "wsJoinServerCli.h"
 #include "DirPath.h"
 #include "MapClass.h"
-#include "NSerialCheck.h"
 #include "classdef.h"
 #include "CLoginCount.h"
 #include "DragonEvent.h"

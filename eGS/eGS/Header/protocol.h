@@ -1794,7 +1794,6 @@ void GCMapEventStateSend(int map, unsigned char state, unsigned char event);
 void CGChatWhisperRecv(PMSG_CHATDATA_WHISPER* lpMsg, int aIndex);
 void SCPJoinResultSend(int aIndex, unsigned char result);
 void CSPJoinIdPassRequest(PMSG_IDPASS* lpMsg, int aIndex);
-void CSPJoinIdPassRequestTEST(PMSG_IDPASS* lpMsg, int aIndex);
 void GCJoinBillCheckSend(char* AccountId, int aIndex);
 void GCJoinResult(unsigned char result, int aIndex);
 void GCJoinSocketResult(unsigned char result, SOCKET Socket);

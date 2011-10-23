@@ -1431,10 +1431,10 @@ int  CObjAttack::GetAttackDamage(LPOBJ lpObj, int targetDefense, BYTE& effect, B
 
 		if ( lpMagic )
 		{
-			if ( lpMagic ->m_Skill == 66 && lpObj->SkillLongSpearChange )	// #error 60 and skil from GEt is 66???
+			if ( lpMagic ->m_Skill == 66 && lpObj->SkillLongSpearChange )	
 			{
-				SkillRightMaxDamage = DefMagicInf[66].m_DamageMax;// #error ???
-				SkillRightMinDamage = DefMagicInf[66].m_DamageMin;// #error ???
+				SkillRightMaxDamage = DefMagicInf[66].m_DamageMax;
+				SkillRightMinDamage = DefMagicInf[66].m_DamageMin;
 			}
 			else
 			{
