@@ -4154,89 +4154,105 @@ void gObjBillRequest(LPOBJ lpObj)
 {
 	char szMsg[128];
 
-	if ( m_ObjBill[lpObj->m_Index].GetPayCode() == 0 )
+	switch ( m_ObjBill[lpObj->m_Index].GetPayCode() )
 	{
-		if ( m_ObjBill[lpObj->m_Index].GetCertify() == 0 )
-		{// #error
-			wsprintf(szMsg, ""/*, m_ObjBill[lpObj->m_Index].GetEndTime()*/);
-		}
-		else if ( m_ObjBill[lpObj->m_Index].GetCertify() == 1 )
+	case 0:
 		{
-			if ( m_ObjBill[lpObj->m_Index].GetEndTime() != 0 )
+			if ( m_ObjBill[lpObj->m_Index].GetCertify() == 0 )
+			{// #error
+				wsprintf(szMsg, ""/*, m_ObjBill[lpObj->m_Index].GetEndTime()*/);
+			}
+			else if ( m_ObjBill[lpObj->m_Index].GetCertify() == 1 )
 			{
-				wsprintf(szMsg, "You have %d minute(s) remaining for IP usage", m_ObjBill[lpObj->m_Index].GetEndTime());
+				if ( m_ObjBill[lpObj->m_Index].GetEndTime() != 0 )
+				{
+					wsprintf(szMsg, "You have %d minute(s) remaining for IP usage", m_ObjBill[lpObj->m_Index].GetEndTime());
+				}
 			}
 		}
-	}
-	else if ( m_ObjBill[lpObj->m_Index].GetPayCode() == 1 )
-	{
-		char szTemp[20];
-		szTemp[4] = 0;
-		strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
-		int Day = atoi(szTemp);
+		break;
 
-		strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
-		szTemp[2] = 0;
-		int Month = atoi(szTemp);
-
-		strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
-		szTemp[2] = 0;
-		int Year = atoi(szTemp);
-
-		if ( m_ObjBill[lpObj->m_Index].GetCertify() == 0 )	// Account Based
+	case 1:
 		{
-			wsprintf(szMsg, "This account is valid until %2d %2d %4d", Day, Month, Year);
+			char szTemp[20];
+			szTemp[4] = 0;
+			strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
+			int Day = atoi(szTemp);
+
+			strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
+			szTemp[2] = 0;
+			int Month = atoi(szTemp);
+
+			strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
+			szTemp[2] = 0;
+			int Year = atoi(szTemp);
+
+			if ( m_ObjBill[lpObj->m_Index].GetCertify() == 0 )	// Account Based
+			{
+				wsprintf(szMsg, "This account is valid until %2d %2d %4d", Day, Month, Year);
+			}
+			else if ( m_ObjBill[lpObj->m_Index].GetCertify() == 1 )	// IP Based
+			{
+				wsprintf(szMsg, "This IP is valid until %2d %2d %4d", Day, Month, Year);
+			}
 		}
-		else if ( m_ObjBill[lpObj->m_Index].GetCertify() == 1 )	// IP Based
+		break;
+
+	case 3:
 		{
-			wsprintf(szMsg, "This IP is valid until %2d %2d %4d", Day, Month, Year);
+			char szYear[5] = "";
+			char szMonth[3] = "";
+			char szDay[3] = "";
+			char szHour[3] = "";
+			char szMin[3] = "";
+
+			strncpy_s(szYear, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
+			strncpy_s(szMonth, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
+			strncpy_s(szDay, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
+			strncpy_s(szHour, m_ObjBill[lpObj->m_Index].GetEndsDays()+8, 2);
+			strncpy_s(szMin, m_ObjBill[lpObj->m_Index].GetEndsDays()+10, 2);
+
+			wsprintf(szMsg, "You have %d points remaining. You next payment period is on %s.%s.%s at %s:%s.", m_ObjBill[lpObj->m_Index].GetEndTime(), szYear, szMonth,
+				szDay, szHour, szMin);
+
+			LogAdd("[%s][%s] BillType : (Time) RemainPoint : (%d)",
+				lpObj->AccountID, lpObj->Name, m_ObjBill[lpObj->m_Index].GetEndTime());		
 		}
+		break;
+
+	case 4:
+		{
+			char szYear[5] = "";
+			char szMonth[3] = "";
+			char szDay[3] = "";
+
+			strncpy_s(szYear, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
+			strncpy_s(szMonth, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
+			strncpy_s(szDay, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
+
+			wsprintf(szMsg, "You can play MU until %s.%s.%s with your current balance.",  szYear, szMonth,	szDay);
+
+			LogAdd("[%s][%s] BillType : (Date) RemainDate : (%s-%s-%s)",
+				lpObj->AccountID, lpObj->Name, szYear, szMonth, szDay);		
+		}
+		break;
+
+	case 5: // Free
+		{
+			wsprintf(szMsg, "Welcome to Play4Free My Games Network!");
+			LogAdd("[%s][%s] BillType : (NoCharge)", lpObj->AccountID, lpObj->Name);
+		}
+		break;
+
+	default:
+		{
+			strcpy(szMsg,"You have logged in with a postpaid account");
+		}
+		break;
+
+		
+
 	}
-	else if ( m_ObjBill[lpObj->m_Index].GetPayCode() == 3)
-	{
-		char szYear[5] = "";
-		char szMonth[3] = "";
-		char szDay[3] = "";
-		char szHour[3] = "";
-		char szMin[3] = "";
-
-		strncpy_s(szYear, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
-		strncpy_s(szMonth, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
-		strncpy_s(szDay, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
-		strncpy_s(szHour, m_ObjBill[lpObj->m_Index].GetEndsDays()+8, 2);
-		strncpy_s(szMin, m_ObjBill[lpObj->m_Index].GetEndsDays()+10, 2);
-
-		wsprintf(szMsg, "You have %d points remaining. You next payment period is on %s.%s.%s at %s:%s.", m_ObjBill[lpObj->m_Index].GetEndTime(), szYear, szMonth,
-			szDay, szHour, szMin);
-
-		LogAdd("[%s][%s] BillType : (Time) RemainPoint : (%d)",
-			lpObj->AccountID, lpObj->Name, m_ObjBill[lpObj->m_Index].GetEndTime());
-	}
-	else if ( m_ObjBill[lpObj->m_Index].GetPayCode() == 4)
-	{
-		char szYear[5] = "";
-		char szMonth[3] = "";
-		char szDay[3] = "";
-
-		strncpy_s(szYear, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
-		strncpy_s(szMonth, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
-		strncpy_s(szDay, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
-
-		wsprintf(szMsg, "You can play MU until %s.%s.%s with your current balance.",  szYear, szMonth,	szDay);
-
-		LogAdd("[%s][%s] BillType : (Date) RemainDate : (%s-%s-%s)",
-			lpObj->AccountID, lpObj->Name, szYear, szMonth, szDay);
-	}
-	else if ( m_ObjBill[lpObj->m_Index].GetPayCode() == 5)		// FREE
-	{
-		wsprintf(szMsg, "Welcome to Play4Free My Games Network!");
-		LogAdd("[%s][%s] BillType : (NoCharge)", lpObj->AccountID, lpObj->Name);
-	}
-	else	// Pospaid Account
-	{
-		strcpy(szMsg,"You have logged in with a postpaid account");
-	}
-
 
 	LogAdd(szMsg);
 	GCServerMsgStringSend(szMsg, lpObj->m_Index, 1);
@@ -16162,17 +16178,6 @@ void gObjUseDrink(LPOBJ lpObj, int level)
 	}
 }
 
-
-//------------------------------------------------------------
-
-
-int  gObjCurMoveMake(BYTE * const path , LPOBJ lpObj)	//#error Func not used
-{
-	// Lacking Full Code Here
-	return 0;
-}
-
-
 //------------------------------------------------------------
 
 
@@ -17456,14 +17461,6 @@ void gObjSkillBeAttackProc(LPOBJ lpObj)
 			if(lpObj->Life > 0.0)
 			{
 				ad = int(lpObj->Life * 3 / 100);
-				/*if(lpObj->m_PoisonType == 38)
-				{
-					ad = int(lpObj->Life * 3 / 100);//#error o_O для чого порівнювати це все якщо результат однаковий???
-				}
-				else
-				{
-					ad = int(lpObj->Life * 3 / 100);
-				}*/
 			}
 			else
 			{
@@ -18311,108 +18308,7 @@ struct PMSG_POSMAGIC_COUNT {
 };
 // <size 0x9>
 
-
-int gObjPosMagicAttack(LPOBJ lpObj, CMagicInf * lpMagic, BYTE x, BYTE y)//#error Not used
-{
-	int tObjNum;
-	int dis;
-	int tx;
-	int ty;
-	int MagicDistance;
-	unsigned char sbuf[256];
-	int lOfs;
-	unsigned char MagicNumber;
-	PMSG_POSMAGIC_COUNT pCount;
-	PMSG_POSMAGIC_RESULT pResult;
-	int MVL;
-	int n;
-
-	MagicDistance = 3;
-	lOfs = 0;
-	MagicNumber = lpMagic->m_Skill;
-
-	switch(MagicNumber)
-	{
-	case 9: MagicDistance = 3;
-		break;
-	default: MagicDistance = 3;
-		break;
-	}
-
-	lOfs = sizeof(pCount);
-	pCount.h.c = 0xC1;
-	pCount.h.headcode = 0x1A;
-	pCount.h.size = 0;
-
-	pCount.MapX = x;
-	pCount.MapY = y;
-	pCount.MagicNumber = MagicNumber;
-	pCount.NumberH = SET_NUMBERH(lpObj->m_Index);
-	pCount.NumberL = SET_NUMBERL(lpObj->m_Index);
-	pCount.Count = 0;
-
-	MVL = MAX_VIEWPORT;
-
-	if(lpObj->Type == OBJ_MONSTER)
-	{
-		MVL = MAX_VIEWPORT_MONSTER;
-	}
-
-	for(n = 0; n < MVL; n++)
-	{
-		if(lpObj->VpPlayer[n].state)
-		{
-			tObjNum = lpObj->VpPlayer[n].number;
-
-			if(tObjNum >= 0)
-			{
-				if(gObj[tObjNum].Live)
-				{
-					tx = lpObj->X - gObj[tObjNum].X;
-					ty = lpObj->Y - gObj[tObjNum].Y;
-
-					dis = (int)sqrt( double(tx*tx + ty*ty) );
-
-					if(dis <= MagicDistance)
-					{
-						if(gObjAttack(lpObj,&gObj[tObjNum],lpMagic,0,0,0,0) == 1)
-						{
-							pResult.NumberH = SET_NUMBERH(tObjNum);
-							pResult.NumberL = SET_NUMBERL(tObjNum);
-
-							memcpy(&sbuf[lOfs],&pResult,sizeof(pResult));
-							pCount.Count++;
-							lOfs+=sizeof(pResult);
-
-							if(lOfs > 250)
-							{
-								LogAdd("Buffer overflow : %s %d",__FILE__,__LINE__);
-								return false;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	pCount.h.size = lOfs;
-
-	memcpy(sbuf,&pCount,sizeof(pCount));
-
-	if(lpObj->Type == OBJ_USER)
-	{
-		DataSend(lpObj->m_Index,sbuf,lOfs);
-	}
-
-	MsgSendV2(lpObj,sbuf,lOfs);
-	return true;
-}
-
-
-
-//------------------------------------------------------------
-
+//---------------------------------------------------------------------------
 
 void gObjMagicAddEnergyCheckOnOff(int flag)
 {
@@ -19205,7 +19101,6 @@ void gObjGuildWarEndSend(LPOBJ lpObj, BYTE Result1, BYTE Result2)
 		gObjGuildWarItemGive(lpObj->lpGuild->lpTargetGuildNode,lpObj->lpGuild);
 	}
 
-	//#error
 	for(int n = 0; n < MAX_USER_GUILD;n++)
 	{
 		if(lpObj->lpGuild->Use[n] && lpObj->lpGuild->Index[n] >= 0)
@@ -19213,10 +19108,7 @@ void gObjGuildWarEndSend(LPOBJ lpObj, BYTE Result1, BYTE Result2)
 			gObj[lpObj->lpGuild->Index[n]].IsInBattleGround = 0;
 			GCGuildWarEnd(lpObj->lpGuild->Index[n],Result1,lpObj->lpGuild->lpTargetGuildNode->Name);
 		}
-	}
 
-	for(int n = 0; n < MAX_USER_GUILD;n++)
-	{
 		if(lpObj->lpGuild->lpTargetGuildNode->Use[n] && lpObj->lpGuild->lpTargetGuildNode->Index[n] >= 0)
 		{
 			gObj[lpObj->lpGuild->lpTargetGuildNode->Index[n]].IsInBattleGround = 0;
@@ -21744,7 +21636,7 @@ int gObjGetRandomFreeArea(int iMapNumber,unsigned char & cX,unsigned char & cY,i
 	if(iLoopCount <= 0)
 		iLoopCount = 1;
 
-	while(iLoopCount-- > 0)//#error
+	while(iLoopCount-- > 0)
 	{
 		cX = Random(iSX,iDX);
 		cY = Random(iSY,iDY);
@@ -22258,7 +22150,7 @@ void gObjNotifyUseWeaponV1(LPOBJ lpOwnerObj, LPOBJ lpWeaponObj, int iTargetX, in
 		lpMsgBody[iVp1Count].btObjClassH = SET_NUMBERH(lpTargetObj->Class);
 		lpMsgBody[iVp1Count].btObjClassL = SET_NUMBERL(lpTargetObj->Class);
 		lpMsgBody[iVp1Count].btObjIndexH = SET_NUMBERH(lpTargetObj->m_Index);
-		lpMsgBody[iVp1Count].btObjIndexL = SET_NUMBERL(lpTargetObj->m_Index); //#error btObjIndexH = SET_NUMBERL было так, надо протестить будет...
+		lpMsgBody[iVp1Count].btObjIndexL = SET_NUMBERL(lpTargetObj->m_Index);
 		lpMsgBody[iVp1Count].btX = (BYTE)lpTargetObj->X;
 		lpMsgBody[iVp1Count].btY = (BYTE)lpTargetObj->Y;
 		lpMsgBody[iVp1Count].dwViewSkillState = lpTargetObj->m_ViewSkillState;

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="CSAuth">
-      <UniqueIdentifier>{362077a0-b73e-4f82-849c-6e8aaf907b5f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GGSrv">
       <UniqueIdentifier>{1fcfacda-eed3-4499-982b-39beae4a06ce}</UniqueIdentifier>
     </Filter>
@@ -337,9 +334,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Header\MultiCheckSum.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Header\NSerialCheck.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Header\ObjAttack.h">
@@ -859,9 +853,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\NpcTalk.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NSerialCheck.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\ObjAttack.cpp">

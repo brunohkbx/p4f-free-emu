@@ -1311,7 +1311,6 @@ class CMagicInf* gObjGetMagic(LPOBJ lpObj, int mIndex);
 class CMagicInf* gObjGetMagicSearch(LPOBJ lpObj, unsigned char skillnumber);
 int gObjMagicManaUse(LPOBJ lpObj, class CMagicInf* lpMagic);
 int gObjMagicBPUse(LPOBJ lpObj, class CMagicInf* lpMagic);
-int gObjPosMagicAttack(LPOBJ lpObj, class CMagicInf* lpMagic, unsigned char x, unsigned char y);//#error Not used
 void gObjMagicAddEnergyCheckOnOff(int flag);
 int gObjMagicAdd(LPOBJ lpObj, unsigned char aSkill, unsigned char Level);
 int gObjMagicDel(LPOBJ lpObj, unsigned char aSkill, unsigned char Level);

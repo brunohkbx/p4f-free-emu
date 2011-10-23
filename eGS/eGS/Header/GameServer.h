@@ -35,7 +35,7 @@
 //#define TRACE_PROTOCOL	0
 
 #define HACK_LOG_SERVER_ENABLED	0
-#define CSAUTH_VERSION	2
+
 
 //*********** DO NOT CHANGE THIS *********************
 #ifndef USE_M_DRIVE

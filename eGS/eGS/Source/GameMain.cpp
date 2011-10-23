@@ -2190,23 +2190,6 @@ void ReadCommonServerInfo()
 
 	CheckSumFileLoad(szCheckSum);
 
-#if (CSAUTH_VERSION==1)
-	BOOL bret = _LoadAuthTable(gDirPath.GetNewPath("CSAuth.tab"));
-
-	if(bret != 8)
-	{
-		MsgBox("CSAuth File Load Fail");
-	}
-
-	bret = _LoadAuthIndex(gDirPath.GetNewPath("CSAuth.idx"));
-
-	if(bret != 1)
-	{
-		MsgBox("CSAuth.idx File Load Fail");
-	}
-#endif
-
-
 	SetMapName();
 
 #if (FOREIGN_GAMESERVER==1)
