@@ -2,7 +2,7 @@
 // Decompiled by Deathway
 // Date : 2007-05-09
 // ------------------------------
-#include "..\Header\stdafx.h"
+#include "..\Header\StdAfx.h"
 #include "..\Header\NSerialCheck.h"
 
 // GS-N 0.99.60T // 452a00 Status : Completed
