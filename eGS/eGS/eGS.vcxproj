@@ -170,6 +170,7 @@
     <ClInclude Include="Header\MyWinsockBase.h" />
     <ClInclude Include="Header\NewSystem.h" />
     <ClInclude Include="Header\NpcTalk.h" />
+    <ClInclude Include="Header\NSerialCheck.h" />
     <ClInclude Include="Header\ObjAttack.h" />
     <ClInclude Include="Header\ObjBaseAttack.h" />
     <ClInclude Include="Header\ObjCalCharacter.h" />
@@ -346,6 +347,7 @@
     <ClCompile Include="Source\MyWinsockBase.cpp" />
     <ClCompile Include="Source\NewSystem.cpp" />
     <ClCompile Include="Source\NpcTalk.cpp" />
+    <ClCompile Include="Source\NSerialCheck.cpp" />
     <ClCompile Include="Source\ObjAttack.cpp" />
     <ClCompile Include="Source\ObjBaseAttack.cpp" />
     <ClCompile Include="Source\ObjCalCharacter.cpp" />

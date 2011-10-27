@@ -15,6 +15,7 @@
 #include "MonsterSetBase.h"
 #include "PartyClass.h"
 #include "ItemBagEx.h"
+#include "NSerialCheck.h"
 
 
 #define FIRST_PATH "c:\\Muproject\\data\\"

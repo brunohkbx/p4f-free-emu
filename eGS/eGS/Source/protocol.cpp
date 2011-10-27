@@ -13447,6 +13447,48 @@ struct PMSG_REQ_REGISTER_MUTONUM
 	char szUID[11];	// 8
 };
 
+void GCGetMutoNumRecv(PMSG_GETMUTONUMBER* lpMsg, int aIndex)
+{
+	if ( gObj[aIndex].MutoNumber != 0 )
+	{
+		char msg[255];
+		wsprintf(msg, "이미 루가드의 숫자가 있습니다");
+		GCServerMsgStringSend(msg, aIndex, 1);
+		return;
+	}
+
+	if ( gObj[aIndex].UseEventServer != FALSE )
+		return;
+
+	gObj[aIndex].UseEventServer = TRUE;
+
+	if ( !gObjFind10EventChip(aIndex) )
+	{
+		PMSG_GETMUTONUMBER_RESULT Result;
+
+		PHeadSetB((LPBYTE)&Result, 0x96, sizeof(Result));
+		Result.MutoNum[0] = -1;
+		Result.MutoNum[1] = 0;
+		Result.MutoNum[2] = 0;
+
+		DataSend(aIndex, (LPBYTE)&Result, Result.h.size);
+		gObj[aIndex].UseEventServer = FALSE;
+
+		return;
+	}
+
+	PMSG_REQ_REGISTER_MUTONUM pMsg;
+
+	PHeadSetB((LPBYTE)&pMsg, 0x03, sizeof(pMsg));
+	pMsg.iINDEX = aIndex;
+	strcpy_s(pMsg.szUID, sizeof(pMsg.szUID), gObj[aIndex].AccountID);
+
+	//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg));
+
+	LogAdd("[EventChip] [%s][%s] Request MutoNumber",
+		gObj[aIndex].AccountID, gObj[aIndex].Name);
+}
+
 
 void GCUseEndEventChipRescv(int aIndex)
 {
@@ -13471,6 +13513,32 @@ struct PMSG_REQ_RESET_EVENTCHIP
 	int iINDEX;	// 4
 	char szUID[11];	// 8
 };
+
+void GCUseRenaChangeZenRecv(PMSG_EXCHANGE_EVENTCHIP* lpMsg, int aIndex)
+{
+	if ( gObj[aIndex].UseEventServer )
+		return;
+
+	gObj[aIndex].UseEventServer = TRUE;
+
+	PMSG_REQ_RESET_EVENTCHIP pMsg;
+
+	if ( lpMsg->btType == 1 )	// Stone?
+		PHeadSetB((LPBYTE)&pMsg, 0x09, sizeof(pMsg));
+	else
+		PHeadSetB((LPBYTE)&pMsg, 0x04, sizeof(pMsg));
+
+	pMsg.iINDEX = aIndex;
+	strcpy_s(pMsg.szUID, sizeof(pMsg.szUID), gObj[aIndex].AccountID);
+
+	//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg));
+
+	if ( lpMsg->btType == 0x01 )
+		LogAdd("[EventChip] [%s][%s] Request Change Stones", gObj[aIndex].AccountID, gObj[aIndex].Name);
+	else
+		LogAdd("[EventChip] [%s][%s] Request Change Rena", gObj[aIndex].AccountID, gObj[aIndex].Name);
+}
+
 
 
 struct PMSG_SEND_QEUSTINFO
@@ -14127,6 +14195,33 @@ struct PMSG_REQ_2ANIV_SERIAL
 	int iMEMB_GUID;	// 24
 };
 
+
+void CGRequestLottoRegister(PMSG_REQ_2ANV_LOTTO_EVENT* lpMsg, int aIndex)
+{
+	PMSG_REQ_2ANIV_SERIAL pMsg;
+
+	PHeadSetB((LPBYTE)&pMsg, 0x08, sizeof(pMsg));
+
+	if ( gObj[aIndex].UseEventServer )
+		return;
+
+	gObj[aIndex].UseEventServer = TRUE;
+	pMsg.iINDEX = aIndex;
+	pMsg.iMEMB_GUID = gObj[aIndex].DBNumber;
+	memcpy(pMsg.szUID, gObj[aIndex].AccountID, MAX_ACCOUNT_LEN);
+	pMsg.szUID[MAX_ACCOUNT_LEN] = 0;
+	memcpy(pMsg.SERIAL1, lpMsg->SERIAL1, 4);
+	pMsg.SERIAL1[4] = 0;
+	memcpy(pMsg.SERIAL2, lpMsg->SERIAL2, 4);
+	pMsg.SERIAL2[4] = 0;
+	memcpy(pMsg.SERIAL3, lpMsg->SERIAL3, 4);
+	pMsg.SERIAL3[4] = 0;
+
+	//DataSendEventChip((PCHAR)&pMsg, sizeof(pMsg));
+
+	LogAdd("[Mu_2Anv_Event] [%s][%s] Register Lotto Number (Serial: %s-%s-%s)",
+		gObj[aIndex].AccountID, gObj[aIndex].Name, pMsg.SERIAL1, pMsg.SERIAL2, pMsg.SERIAL3);
+}
 
 struct SDHP_CHARACTER_TRANSFER
 {
