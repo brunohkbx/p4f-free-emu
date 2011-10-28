@@ -128,9 +128,6 @@ MessageStateMachine gSMMsg[OBJMAX][MAX_MONSTER_SEND_MSG];
 ExMessageStateMachine gSMAttackProcMsg[OBJMAX][MAX_MONSTER_SEND_ATTACK_MSG];
 
 
-BILL_CLASS m_ObjBill[OBJMAX];	// line : 193
-
-
 
 HANDLE hThread_gObjMove;
 
@@ -3182,10 +3179,6 @@ int gObjSetCharacter(SDHP_DBCHAR_INFORESULT *lpMsg, int aIndex)
 	if (!lpObj->bot)
 		::GCCheckMainExeKeySend(aIndex);
 
-	if ( m_ObjBill[aIndex].GetCertify() >= 0 && m_ObjBill[aIndex].GetCertify() < 3 )
-	{
-		gLCount[m_ObjBill[aIndex].GetCertify()].Add();
-	}
 
 	if ( bAllItemExist == false )
 	{
@@ -3215,23 +3208,6 @@ int gObjSetCharacter(SDHP_DBCHAR_INFORESULT *lpMsg, int aIndex)
 	return TRUE;
 }
 
-
-BILL_CLASS::BILL_CLASS()	// line : 253
-{
-	this->Init();
-}
-
-
-void BILL_CLASS::Init()	// line : 219
-{
-	this->cCertifyType=-1;
-	this->PayCode=0;
-	this->EndTime=0;
-	this->EndsDays[0]='\0';
-};	// line : 224
-
-
-int BILL_CLASS::GetCertify() {return this->cCertifyType;};	// line : 255
 
 
 
@@ -3928,7 +3904,6 @@ short gObjAdd(SOCKET aSocket, char* ip, int aIndex)
 	gObj[aIndex].Type = OBJ_USER;
 	gObj[aIndex].SaveTimeForStatics = GetTickCount() + 3600000;
 
-	m_ObjBill[aIndex].Init();
 	strcpy_s(gObj[aIndex].Ip_addr, sizeof(gObj[aIndex].Ip_addr), ip);
 	LogAdd("connect : [%d][%s]", aIndex, ip);
 	gObjCount++;
@@ -4154,105 +4129,8 @@ void gObjBillRequest(LPOBJ lpObj)
 {
 	char szMsg[128];
 
-	switch ( m_ObjBill[lpObj->m_Index].GetPayCode() )
-	{
-	case 0:
-		{
-			if ( m_ObjBill[lpObj->m_Index].GetCertify() == 0 )
-			{// #error
-				wsprintf(szMsg, ""/*, m_ObjBill[lpObj->m_Index].GetEndTime()*/);
-			}
-			else if ( m_ObjBill[lpObj->m_Index].GetCertify() == 1 )
-			{
-				if ( m_ObjBill[lpObj->m_Index].GetEndTime() != 0 )
-				{
-					wsprintf(szMsg, "You have %d minute(s) remaining for IP usage", m_ObjBill[lpObj->m_Index].GetEndTime());
-				}
-			}
-		}
-		break;
-
-	case 1:
-		{
-			char szTemp[20];
-			szTemp[4] = 0;
-			strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
-			int Day = atoi(szTemp);
-
-			strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
-			szTemp[2] = 0;
-			int Month = atoi(szTemp);
-
-			strncpy_s(szTemp, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
-			szTemp[2] = 0;
-			int Year = atoi(szTemp);
-
-			if ( m_ObjBill[lpObj->m_Index].GetCertify() == 0 )	// Account Based
-			{
-				wsprintf(szMsg, "This account is valid until %2d %2d %4d", Day, Month, Year);
-			}
-			else if ( m_ObjBill[lpObj->m_Index].GetCertify() == 1 )	// IP Based
-			{
-				wsprintf(szMsg, "This IP is valid until %2d %2d %4d", Day, Month, Year);
-			}
-		}
-		break;
-
-	case 3:
-		{
-			char szYear[5] = "";
-			char szMonth[3] = "";
-			char szDay[3] = "";
-			char szHour[3] = "";
-			char szMin[3] = "";
-
-			strncpy_s(szYear, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
-			strncpy_s(szMonth, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
-			strncpy_s(szDay, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
-			strncpy_s(szHour, m_ObjBill[lpObj->m_Index].GetEndsDays()+8, 2);
-			strncpy_s(szMin, m_ObjBill[lpObj->m_Index].GetEndsDays()+10, 2);
-
-			wsprintf(szMsg, "You have %d points remaining. You next payment period is on %s.%s.%s at %s:%s.", m_ObjBill[lpObj->m_Index].GetEndTime(), szYear, szMonth,
-				szDay, szHour, szMin);
-
-			LogAdd("[%s][%s] BillType : (Time) RemainPoint : (%d)",
-				lpObj->AccountID, lpObj->Name, m_ObjBill[lpObj->m_Index].GetEndTime());		
-		}
-		break;
-
-	case 4:
-		{
-			char szYear[5] = "";
-			char szMonth[3] = "";
-			char szDay[3] = "";
-
-			strncpy_s(szYear, m_ObjBill[lpObj->m_Index].GetEndsDays(), 4);
-			strncpy_s(szMonth, m_ObjBill[lpObj->m_Index].GetEndsDays()+4, 2);
-			strncpy_s(szDay, m_ObjBill[lpObj->m_Index].GetEndsDays()+6, 2);
-
-			wsprintf(szMsg, "You can play MU until %s.%s.%s with your current balance.",  szYear, szMonth,	szDay);
-
-			LogAdd("[%s][%s] BillType : (Date) RemainDate : (%s-%s-%s)",
-				lpObj->AccountID, lpObj->Name, szYear, szMonth, szDay);		
-		}
-		break;
-
-	case 5: // Free
-		{
-			wsprintf(szMsg, "Welcome to Play4Free My Games Network!");
-			LogAdd("[%s][%s] BillType : (NoCharge)", lpObj->AccountID, lpObj->Name);
-		}
-		break;
-
-	default:
-		{
-			strcpy(szMsg,"You have logged in with a postpaid account");
-		}
-		break;
-
-		
-
-	}
+	wsprintf(szMsg, "Welcome to Play4Free My Games Network!");
+	LogAdd("[%s][%s] BillType : (NoCharge)", lpObj->AccountID, lpObj->Name);
 
 	LogAdd(szMsg);
 	GCServerMsgStringSend(szMsg, lpObj->m_Index, 1);
@@ -4485,11 +4363,6 @@ BOOL gObjGameClose(int aIndex)
 
 	memset(lpObj->Name, 0, sizeof(lpObj->Name)-1);
 	lpObj->Connected = PLAYER_LOGGED;
-
-	if ( m_ObjBill[aIndex].GetCertify() >= 0 && m_ObjBill[aIndex].GetCertify() < 3)
-	{
-		gLCount[m_ObjBill[aIndex].GetCertify()].Delete();
-	}
 
 	return TRUE;
 }

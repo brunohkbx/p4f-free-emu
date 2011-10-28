@@ -76,18 +76,7 @@ int tempindex;
 int iCount;
 
 
-// #Original on user.h
-BOOL BILL_CLASS::SetBill(BYTE certify_type, BYTE pay, DWORD end_time, char* ends_days)	// line : 228
-{
-	BOOL bRet=FALSE;
-
-	if ( this->cCertifyType == -1 )bRet = TRUE;
-	cCertifyType = certify_type;
-	PayCode = pay;
-	EndTime = end_time;
-	strcpy_s(EndsDays, sizeof(EndsDays), ends_days);
-	return bRet;
-};	// line : 237
+;	// line : 237
 
 
 BOOL PacketCheckTime(LPOBJ lpObj)
