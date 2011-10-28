@@ -7,7 +7,7 @@
 #include "..\Header\ReadScript.h"
 
 IL_BATTLESTRUCT Battle[IL_MAXBATTLE];
-bool bIT[7];
+bool bIT[8];
 
 SYSTEMTIME t_time;
 
@@ -877,7 +877,8 @@ void ILAPI_KillPointsManage(IL_TEAMSTRUCT *pTeam, int Points, IL_KILL_POINTS Rea
 void ILAPI_MaskTeam(IL_TEAMSTRUCT *pTeam, int m_Change) {
 	for(unsigned i = 0; i < pTeam->v_Members.size(); i++)
 	{
-		gObj[pTeam->v_Members.at(i).aIndex].m_Change = m_Change;
+		gObj[pTeam->v_Members[i].aIndex].m_Change = m_Change;
+		gObjViewportListProtocolCreate(&gObj[pTeam->v_Members[i].aIndex]);
 	}
 }
 

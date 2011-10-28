@@ -2344,7 +2344,7 @@ void ChatDrop(int aIndex,char* text)
 	char* tmp="";
 	int i=0;
 
-	std::vector<int> Item;
+	std::vector<unsigned int> Item;
 
 	Item.assign(10,0);
 
@@ -2353,8 +2353,11 @@ void ChatDrop(int aIndex,char* text)
 
 	while ( tmp!=NULL )
 	{
-		Item[i]=abs(atoi(tmp));
-		i++;
+		Item[i++]=atoi(tmp);
+		
+		if (i > 8)
+			break;
+
 		tmp = strtok_s(NULL," ",&tok);
 	}
 
