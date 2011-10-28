@@ -1014,64 +1014,7 @@ union
 typedef OBJECTSTRUCT * LPOBJ;
 
 
-// sizeof ( BILL_CLASS ) == 0x18
-class BILL_CLASS
-{
 
-private:
-
-	char cCertifyType;	// 0
-	BYTE PayCode;	// 1
-	int EndTime;	// 4
-	char EndsDays[13];	// 8
-
-public:
-
-	BILL_CLASS();/*	// line : 253
-	{
-		this->Init();
-	}*/
-
-
-	void Init();/*	// line : 219
-	{
-		this->cCertifyType=-1;
-		this->PayCode=0;
-		this->EndTime=0;
-		this->EndsDays[0]='\0';
-	};	// line : 224*/
-
-
-	BOOL SetBill(BYTE certify_type, BYTE pay, DWORD end_time, char* ends_days);	// line : 228
-	/*{
-		BOOL bRet=FALSE;
-
-		if ( this->cCertifyType == -1 )bRet = TRUE;
-		cCertifyType = certify_type;
-		PayCode = pay;
-		EndTime = end_time;
-		strcpy(EndsDays, ends_days);
-		return bRet;
-	};	// line : 237*/
-
-	// ?Ã??ÀÌ Á??áµÇ?ú?ª?
-	BOOL IsEndTime()
-	{
-		if( cCertifyType == -1             )    return FALSE;
-		if( cCertifyType == CERTIFYTYPE_IP )    return FALSE;
-		if( PayCode      == BILLTYPE_JUNGYANG ) return FALSE;
-		
-		// ?Ã??ÀÌ ?ÙµÇ?ú?Ù?é.
-		if( EndTime < 0 )						return TRUE;
-		
-		return FALSE;
-	};
-
-	BYTE GetPayCode() {return this->PayCode;};	// line : 252
-	char* GetEndsDays() {return &this->EndsDays[0];};	// line : 253
-	int GetEndTime() { return this->EndTime;};	// line : 254
-	int GetCertify(); //{return this->cCertifyType;};	// line : 255
-};
 
 
 
@@ -1083,7 +1026,6 @@ public:
 
 //extern CViewportGuild ViewGuildMng;
 extern OBJECTSTRUCT gObj[OBJMAX];
-extern BILL_CLASS m_ObjBill[OBJMAX];
 
 
 extern int gObjCSFlag;

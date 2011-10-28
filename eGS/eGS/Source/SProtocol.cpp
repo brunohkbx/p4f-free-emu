@@ -308,10 +308,6 @@ void GJPBillCeckRecv(SDHP_BILLSEARCH_RESULT * lpMsg)
 	memset(EndsDays, 0, sizeof(EndsDays));
 	memcpy(EndsDays, lpMsg->EndsDays, sizeof(lpMsg->EndsDays));
 
-	if ( m_ObjBill[aIndex].SetBill( lpMsg->cCertifyType , lpMsg->PayCode, lpMsg->EndTime , EndsDays) == TRUE )
-	{
-		gObjAddMsgSendDelay(&gObj[aIndex], 1000, aIndex, 100, 0);
-	}
 }
 
 
