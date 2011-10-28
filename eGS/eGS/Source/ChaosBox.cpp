@@ -1804,95 +1804,28 @@ BOOL IllusionTempleItemChaosMix(LPOBJ lpObj)
 
 
 
-BOOL ThirdWingLevel1ChaosMix(LPOBJ lpObj)
+BOOL ThirdWingLevel1ChaosMix(LPOBJ lpObj) // Feather of Condor
 {
+	//----------- Lock CM
 	lpObj->ChaosLock = TRUE;
+	//-----------
 
-	int WingCount = 0;
-	int ChoasGemCount = 0;
-	int BundleOfSoulCount = 0;
-	int JewelOfCreationCount = 0;
-	int SetItemCount = 0;
-	int WingIndex = -1;
-	int iChaosMoney = 0;
-	int iCharmOfLuckCount = 0;
-
-	for ( int n=0;n<CHAOS_BOX_SIZE;n++)
-	{
-		if ( lpObj->pChaosBox[n].IsItem() == TRUE )
-		{
-			if ( (lpObj->pChaosBox[n].m_Type >= ITEMGET(12,3) && lpObj->pChaosBox[n].m_Type <= ITEMGET(12,6)) || lpObj->pChaosBox[n].m_Type == ITEMGET(13,30) ) 
-			{
-				if ( lpObj->pChaosBox[n].m_Level >= 9 && lpObj->pChaosBox[n].m_Option3 >= 1 )
-				{
-					WingCount++;
-					WingIndex = n;
-				}
-			}
-			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(12,15) ) // Chaos
-			{
-				ChoasGemCount++;
-			}
-			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(12,31) ) // Bundle of Soul
-			{
-				BundleOfSoulCount++;
-			}
-			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(14,22) ) // Jewel of Creation
-			{
-				JewelOfCreationCount++;
-			}
-			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(14,53) ) // Charm Of Luck
-			{
-				iCharmOfLuckCount += (int)lpObj->pChaosBox[n].m_Durability;
-			}
-			else if ( lpObj->pChaosBox[n].IsExtItem() == FALSE ) //Non Exc Item
-			{
-				if ( lpObj->pChaosBox[n].m_Level >= 7 && lpObj->pChaosBox[n].m_Option3 >= 1 )
-				{
-					if ( gSetItemOption.IsSetItem(lpObj->pChaosBox[n].m_Type) != FALSE ) //Set Item
-					{
-						SetItemCount++;
-						iChaosMoney += lpObj->pChaosBox[n].m_BuyMoney;
-					}
-				}
-			}
-		}
-	}
+	bool bWing					= false;
+	bool bChoasGem				= false;
+	bool bBundleOfSoul			= false;
+	bool bJewelOfCreation		= false;
+	int SetItemCount			= 0;
+	int WingIndex				= -1;
+	int iChaosMoney				= 0;
+	int iCharmOfLuckCount		= 0;
+	int nChaosNeedMoney			= 1200000;
 
 	PMSG_CHAOSMIXRESULT pMsg;
+	//----------- Tax Rate
+	int iChaosTaxMoney = (nChaosNeedMoney * g_CastleSiegeSync.GetTaxRateChaos(lpObj->m_Index) / 100);
+	//-----------
 
-	PHeadSetB((LPBYTE)&pMsg.h, 0x86, sizeof(PMSG_CHAOSMIXRESULT));
-	pMsg.Result = CB_ERROR;
-
-	if ( WingCount != 0 && JewelOfCreationCount != 0 )
-	{
-		if ( ChoasGemCount != 1 || BundleOfSoulCount != 1 || JewelOfCreationCount != 1 || SetItemCount != 1 )
-		{
-			lpObj->ChaosLock = FALSE;
-			pMsg.Result = CB_INCORRECT_MIX_ITEMS;
-			DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
-			return FALSE;
-		}
-	}
-	else
-	{
-		lpObj->ChaosLock = FALSE;
-		pMsg.Result = CB_INCORRECT_MIX_ITEMS;
-		DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
-
-		return FALSE;
-	}
-
-	if ( iCharmOfLuckCount > 10 )
-	{
-		lpObj->ChaosLock = FALSE;
-		pMsg.Result = 0xF0;
-		DataSend(lpObj->m_Index, (LPBYTE)&pMsg, pMsg.h.size);
-	}
-
-	int nChaosNeedMoney = 1200000;
-	int iChaosTaxMoney = (int)((__int64)nChaosNeedMoney * (__int64)g_CastleSiegeSync.GetTaxRateChaos(lpObj->m_Index) / (__int64)100);
-
+	//----------- Check Money
 	if ( iChaosTaxMoney < 0 )
 	{
 		iChaosTaxMoney = 0;
@@ -1908,11 +1841,115 @@ BOOL ThirdWingLevel1ChaosMix(LPOBJ lpObj)
 	if ( lpObj->Money < nChaosNeedMoney )
 	{
 		pMsg.Result = CB_NOT_ENOUGH_ZEN;
-		
+
 		DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
 		lpObj->ChaosLock = FALSE;
 
 		return FALSE;
+	}
+	//-----------
+
+	//----------- Check CM Items
+	for ( int n=0; n < CHAOS_BOX_SIZE ;n++)
+	{
+		if ( lpObj->pChaosBox[n].IsItem() == TRUE )
+		{
+			if ( (lpObj->pChaosBox[n].m_Type >= ITEMGET(12,3) && lpObj->pChaosBox[n].m_Type <= ITEMGET(12,6)) || lpObj->pChaosBox[n].m_Type == ITEMGET(13,30) ) // second Wings
+			{
+				if ( lpObj->pChaosBox[n].m_Level >= 9 && lpObj->pChaosBox[n].m_Option3 >= 1 )//second wings
+				{
+					if (bWing) // if we already have wings - incorrect mix
+					{
+						lpObj->ChaosLock = FALSE;
+						pMsg.Result = CB_INCORRECT_MIX_ITEMS;
+						DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
+						return FALSE;
+					}
+					else
+					{
+						bWing = true;
+						WingIndex = n;
+					}
+				}
+			}
+			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(12,15) ) // Chaos
+			{
+				if (bChoasGem) // if we already have chaos - incorrect mix
+				{
+					lpObj->ChaosLock = FALSE;
+					pMsg.Result = CB_INCORRECT_MIX_ITEMS;
+					DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
+					return FALSE;
+				}
+				else
+				{
+					bChoasGem = true;
+				}
+			}
+			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(12,31) ) // Bundle of Soul
+			{
+				if (bBundleOfSoul) //if we already have bundle of soul
+				{
+					lpObj->ChaosLock = FALSE;
+					pMsg.Result = CB_INCORRECT_MIX_ITEMS;
+					DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
+					return FALSE;
+				}
+				else
+				{
+					bBundleOfSoul = true;
+				}
+			}
+			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(14,22) ) // Jewel of Creation
+			{
+				if (bJewelOfCreation)
+				{
+					lpObj->ChaosLock = FALSE;
+					pMsg.Result = CB_INCORRECT_MIX_ITEMS;
+					DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
+					return FALSE;
+				}
+				else
+				{
+					bJewelOfCreation = true;
+				}
+			}
+			else if ( lpObj->pChaosBox[n].m_Type == ITEMGET(14,53) ) // Charm Of Luck
+			{
+				iCharmOfLuckCount += (int)lpObj->pChaosBox[n].m_Durability;
+			}
+			else if ( !lpObj->pChaosBox[n].IsExtItem() && gSetItemOption.IsSetItem(lpObj->pChaosBox[n].m_Type) ) //Non Exc Item and this is Anc :)
+			{
+				if ( lpObj->pChaosBox[n].m_Level >= 7 && lpObj->pChaosBox[n].m_Option3 >= 1 ) // +7 + add
+				{
+					SetItemCount++;
+					iChaosMoney += lpObj->pChaosBox[n].m_BuyMoney;
+				}
+			}
+		}
+	}
+
+	//----------- Check found items
+
+	PHeadSetB((LPBYTE)&pMsg.h, 0x86, sizeof(PMSG_CHAOSMIXRESULT));
+	
+	if ( !bWing || !bJewelOfCreation || !bBundleOfSoul || !bChoasGem || SetItemCount < 1)
+	{
+		lpObj->ChaosLock = FALSE;
+		pMsg.Result = CB_INCORRECT_MIX_ITEMS;
+		DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
+		return FALSE;
+	}
+
+	//-----------
+
+	//----------- Calc Mix Success Rate
+
+	if ( iCharmOfLuckCount > 10 )
+	{
+		lpObj->ChaosLock = FALSE;
+		pMsg.Result = 0xF0;
+		DataSend(lpObj->m_Index, (LPBYTE)&pMsg, pMsg.h.size);
 	}
 
 	CItem * pWing = &lpObj->pChaosBox[WingIndex];
@@ -1927,6 +1964,8 @@ BOOL ThirdWingLevel1ChaosMix(LPOBJ lpObj)
 		lpObj->ChaosSuccessRate += iChaosMoney / 400000; //Good 60%
 	}
 
+	//----------- Check Success Rate
+
 	if ( lpObj->ChaosSuccessRate == 0 )
 	{
 		pMsg.Result = CB_INCORRECT_MIX_ITEMS;
@@ -1936,62 +1975,47 @@ BOOL ThirdWingLevel1ChaosMix(LPOBJ lpObj)
 		return FALSE;
 	}
 
+	//-----------
+
+	//----------- Start Mix
+
 	LogChaosItem(lpObj, "ThirdWingLevel1_Mix");
 	LogAdd("[ThirdWing Mix][Level 01] Chaos Mix Start");
 
-	if ( WingCount == 1 )
-	{
-		if (g_Alternative3WingMix==1)
-		{
-			if ( lpObj->ChaosSuccessRate > g_Alternative3WingSuccessRate)
-			{
-				lpObj->ChaosSuccessRate = g_Alternative3WingSuccessRate;
-			}		
-		}
-		else
-		{
-			if ( lpObj->ChaosSuccessRate > 60)
-			{
-				lpObj->ChaosSuccessRate = 60;
-			}
-		}
-	}
-	else if ( lpObj->ChaosSuccessRate > 100 )
-	{
-		lpObj->ChaosSuccessRate = 100;
-	}
+	//-----------
 
 	lpObj->ChaosSuccessRate += iCharmOfLuckCount;
 	lpObj->Money  -= nChaosNeedMoney;
 	g_CastleSiegeSync.AddTributeMoney(iChaosTaxMoney);
 	GCMoneySend(lpObj->m_Index, lpObj->Money);
 
-	if ( Random(0,99) < lpObj->ChaosSuccessRate )
-	{
-		int iItemType;
-		int iItemSubType;
+	//-----------
 
-		iItemType = 13;
-		iItemSubType = 53;
+	if ( Random(0,99) < lpObj->ChaosSuccessRate ) // Mix Success
+	{
+		int iItemType = 13;
+		int iItemSubType = 53;
+
 		int iWingNum = ITEMGET(iItemType, iItemSubType);
 		
-		//int ExOption;
-
 		::ItemSerialCreateSend(lpObj->m_Index, -1, 0, 0, iWingNum, 0, 0, 0, 0, 0, -1, 0, 0);
 		::gObjInventoryCommit(lpObj->m_Index);
 		::LogAdd("[ThirdWing Mix][Level 01] [%s][%s] CBMix Success %d Money : %d-%d, CharmRate : %d",
 			lpObj->AccountID, lpObj->Name, lpObj->ChaosSuccessRate, lpObj->Money, nChaosNeedMoney, iCharmOfLuckCount);
 		return TRUE;
 	}
-	else
+	else // Mix Filed
 	{
-		for (int n=0;n<CHAOS_BOX_SIZE;n++)
+		for (int n=0 ; n < CHAOS_BOX_SIZE; n++)
 		{
 			lpObj->pChaosBox[n].Clear();
 		}
 
 		GCUserChaosBoxSend(lpObj, 0);
+
+		pMsg.Result = CB_ERROR;
 		DataSend(lpObj->m_Index, (BYTE *)&pMsg, pMsg.h.size);
+
 		::LogAdd("[ThirdWing Mix][Level 01] [%s][%s] CBMix Fail %d Money : %d-%d, CharmRate : %d",
 			lpObj->AccountID, lpObj->Name, lpObj->ChaosSuccessRate, lpObj->Money, nChaosNeedMoney, iCharmOfLuckCount);
 		
